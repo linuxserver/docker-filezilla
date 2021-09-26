@@ -12,7 +12,7 @@ RUN \
  apk add --no-cache --virtual=build-dependencies \
 	curl && \
  if [ -z ${FILEZILLA_VERSION+x} ]; then \
-	FILEZILLA_VERSION=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.13/community/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
+	FILEZILLA_VERSION=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.14/community/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
 	&& awk '/^P:filezilla$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://'); \
  fi && \
  apk add --no-cache \
