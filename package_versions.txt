@@ -193,7 +193,7 @@ wayland-libs-cursor-1.19.0-r0
 wayland-libs-egl-1.19.0-r0
 wayland-libs-server-1.19.0-r0
 webrtc-audio-processing-0.3.1-r0
-websocat-1.8.1-r0
+websocat-1.9.0-r0
 wxgtk-base-3.0.4-r6
 wxgtk3-3.0.4-r6
 xauth-1.1-r0
