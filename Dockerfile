@@ -1,4 +1,4 @@
-FROM lsiobase/rdesktop-web:alpine
+FROM ghcr.io/linuxserver/baseimage-rdesktop-web:3.16
 
 # set version label
 ARG BUILD_DATE
@@ -9,18 +9,15 @@ LABEL maintainer="thelamer"
 
 RUN \
   echo "**** install packages ****" && \
-  apk add --no-cache --virtual=build-dependencies \
-    curl && \
   if [ -z ${FILEZILLA_VERSION+x} ]; then \
-    FILEZILLA_VERSION=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.15/community/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
+    FILEZILLA_VERSION=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.16/community/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
     && awk '/^P:filezilla$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://'); \
   fi && \
   apk add --no-cache \
     filezilla==${FILEZILLA_VERSION} \
     filezilla-lang && \
+  sed -i 's|</applications>|  <application title="FileZilla" type="normal">\n    <maximized>yes</maximized>\n  </application>\n</applications>|' /etc/xdg/openbox/rc.xml && \
   echo "**** cleanup ****" && \
-  apk del --purge \
-    build-dependencies && \
   rm -rf \
     /tmp/*
 
@@ -29,4 +26,5 @@ COPY /root /
 
 # ports and volumes
 EXPOSE 3000
+
 VOLUME /config
