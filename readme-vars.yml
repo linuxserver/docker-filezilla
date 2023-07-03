@@ -7,33 +7,28 @@ project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/ma
 project_blurb: "[FIleZilla]({{ project_url }}) Client is a fast and reliable cross-platform FTP, FTPS and SFTP client with lots of useful features and an intuitive graphical user interface."
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
 project_blurb_optional_extras_enabled: false
-
 # supported architectures
 available_architectures:
-  - { arch: "{{ arch_x86_64 }}", tag: "latest"}
-  - { arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
-  - { arch: "{{ arch_armhf }}", tag: "arm32v7-latest"}
-
+  - {arch: "{{ arch_x86_64 }}", tag: "latest"}
+  - {arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
 # development version
 development_versions: false
-
 # container parameters
 common_param_env_vars_enabled: true
 param_container_name: "{{ project_name }}"
 param_usage_include_env: true
 param_env_vars:
-  - { env_var: "TZ", env_value: "Europe/London", desc: "Specify a timezone to use EG Europe/London." }
+  - {env_var: "TZ", env_value: "Europe/London", desc: "Specify a timezone to use EG Europe/London."}
 param_usage_include_vols: true
 param_volumes:
-  - { vol_path: "/config", vol_host_path: "/path/to/config", desc: "Users home directory in the container, stores local files and settings" }
+  - {vol_path: "/config", vol_host_path: "/path/to/config", desc: "Users home directory in the container, stores local files and settings"}
 param_usage_include_ports: true
 param_ports:
-  - { external_port: "3000", internal_port: "3000", port_desc: "FileZilla desktop gui." }
-  - { external_port: "3001", internal_port: "3001", port_desc: "FileZilla desktop gui HTTPS." }
+  - {external_port: "3000", internal_port: "3000", port_desc: "FileZilla desktop gui."}
+  - {external_port: "3001", internal_port: "3001", port_desc: "FileZilla desktop gui HTTPS."}
 opt_security_opt_param: true
 opt_security_opt_param_vars:
-  - { run_var: "seccomp=unconfined", compose_var: "seccomp:unconfined", desc: "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker." }
-
+  - {run_var: "seccomp=unconfined", compose_var: "seccomp:unconfined", desc: "For Docker Engine only, many modern gui apps need this to function on older hosts as syscalls are unknown to Docker."}
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
@@ -71,12 +66,12 @@ app_setup_block: |
   ### Lossless mode
 
   This container is capable of delivering a true lossless image at a high framerate to your web browser by changing the Stream Quality preset to "Lossless", more information [here](https://www.kasmweb.com/docs/latest/how_to/lossless.html#technical-background). In order to use this mode from a non localhost endpoint the HTTPS port on 3001 needs to be used. If using a reverse proxy to port 3000 specific headers will need to be set as outlined [here](https://github.com/linuxserver/docker-baseimage-kasmvnc#lossless).
-
 # changelog
 changelogs:
-  - { date: "13.05.23:", desc: "Rebase to Alpine 3.18." }
-  - { date: "18.03.23:", desc: "Rebase to KasmVNC base image." }
-  - { date: "21.10.22:", desc: "Rebase to Alpine 3.16, migrate to s6v3." }
-  - { date: "23.12.21:", desc: "Rebase to Alpine 3.15." }
-  - { date: "26.09.21:", desc: "Rebase to Alpine 3.14." }
-  - { date: "18.04.21:", desc: "Initial release." }
+  - {date: "03.07.23:", desc: "Deprecate armhf. As announced [here](https://www.linuxserver.io/blog/a-farewell-to-arm-hf)"}
+  - {date: "13.05.23:", desc: "Rebase to Alpine 3.18."}
+  - {date: "18.03.23:", desc: "Rebase to KasmVNC base image."}
+  - {date: "21.10.22:", desc: "Rebase to Alpine 3.16, migrate to s6v3."}
+  - {date: "23.12.21:", desc: "Rebase to Alpine 3.15."}
+  - {date: "26.09.21:", desc: "Rebase to Alpine 3.14."}
+  - {date: "18.04.21:", desc: "Initial release."}
