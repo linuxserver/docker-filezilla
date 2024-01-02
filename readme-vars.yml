@@ -68,6 +68,7 @@ app_setup_block: |
   This container is capable of delivering a true lossless image at a high framerate to your web browser by changing the Stream Quality preset to "Lossless", more information [here](https://www.kasmweb.com/docs/latest/how_to/lossless.html#technical-background). In order to use this mode from a non localhost endpoint the HTTPS port on 3001 needs to be used. If using a reverse proxy to port 3000 specific headers will need to be set as outlined [here](https://github.com/linuxserver/docker-baseimage-kasmvnc#lossless).
 # changelog
 changelogs:
+  - {date: "02.01.24:", desc: "Rebase to Alpine 3.19."}
   - {date: "03.07.23:", desc: "Deprecate armhf. As announced [here](https://www.linuxserver.io/blog/a-farewell-to-arm-hf)"}
   - {date: "13.05.23:", desc: "Rebase to Alpine 3.18."}
   - {date: "18.03.23:", desc: "Rebase to KasmVNC base image."}
