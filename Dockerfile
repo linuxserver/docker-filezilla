@@ -23,7 +23,6 @@ RUN \
   apk add --no-cache \
     filezilla==${FILEZILLA_VERSION} \
     filezilla-lang && \
-  sed -i 's|</applications>|  <application title="FileZilla" type="normal">\n    <maximized>yes</maximized>\n  </application>\n</applications>|' /etc/xdg/openbox/rc.xml && \
   echo "**** cleanup ****" && \
   rm -rf \
     /tmp/*
