@@ -26,16 +26,14 @@ pipeline {
     DOCKERHUB_IMAGE = 'linuxserver/filezilla'
     DEV_DOCKERHUB_IMAGE = 'lsiodev/filezilla'
     PR_DOCKERHUB_IMAGE = 'lspipepr/filezilla'
-    DIST_IMAGE = 'alpine'
-    DIST_TAG = '3.22'
-    DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.22/community/'
-    DIST_REPO_PACKAGES = 'filezilla'
+    DIST_IMAGE = 'ubuntu'
     MULTIARCH = 'true'
     CI = 'true'
     CI_WEB = 'true'
     CI_PORT = '3001'
     CI_SSL = 'true'
     CI_DELAY = '120'
+    CI_WEB_SCREENSHOT_DELAY='30'
     CI_DOCKERENV = 'TZ=US/Pacific'
     CI_AUTH = 'user:password'
     CI_WEBPATH = ''
@@ -147,15 +145,14 @@ pipeline {
     /* ########################
        External Release Tagging
        ######################## */
-    // If this is an alpine repo change for external version determine an md5 from the version string
-    stage("Set tag Alpine Repo"){
+    // If this is a custom command to determine version use that command
+    stage("Set tag custom bash"){
       steps{
         script{
           env.EXT_RELEASE = sh(
-            script: '''curl -sL "${DIST_REPO}x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
-                       && awk '/^P:'"${DIST_REPO_PACKAGES}"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://' ''',
+            script: ''' curl -s -L https://archive.ubuntu.com/ubuntu/dists/resolute/universe/binary-amd64/Packages.gz | gunzip |grep -A 7 -m 1 'Package: filezilla' | awk -F ': ' '/Version/{print $2;exit}' ''',
             returnStdout: true).trim()
-            env.RELEASE_LINK = 'alpine_repo'
+            env.RELEASE_LINK = 'custom_command'
         }
       }
     }
@@ -898,6 +895,7 @@ pipeline {
                 --shm-size=1gb \
                 -v /var/run/docker.sock:/var/run/docker.sock \
                 -e IMAGE=\"${IMAGE}\" \
+                -e WEB_SCREENSHOT_DELAY=\"${CI_WEB_SCREENSHOT_DELAY}\" \
                 -e DOCKER_LOGS_TIMEOUT=\"${CI_DELAY}\" \
                 -e TAGS=\"${CI_TAGS}\" \
                 -e META_TAG=\"${META_TAG}\" \
@@ -1037,7 +1035,7 @@ pipeline {
                   "type": "commit",\
                   "tagger": {"name": "LinuxServer-CI","email": "ci@linuxserver.io","date": "'${GITHUB_DATE}'"}}'
               echo "Pushing New release for Tag"
-              echo "Updating external repo packages to ${EXT_RELEASE_CLEAN}" > releasebody.json
+              echo "Updating to ${EXT_RELEASE_CLEAN}" > releasebody.json
               jq -n \
                 --arg tag_name "$META_TAG" \
                 --arg target_commitish "master" \
