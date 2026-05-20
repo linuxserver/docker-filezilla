@@ -28,6 +28,7 @@ custom_params:
   - {name: "shm-size", name_compose: "shm_size", value: "1gb", desc: "Recommended for all desktop images."}
 # Selkies blurb settings
 selkies_blurb: true
+show_nvidia: true
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
@@ -102,6 +103,7 @@ init_diagram: |
   "filezilla:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "20.05.26:", desc: "Rebase to Ubuntu Resolute."}
   - {date: "03.04.26:", desc: "Make Wayland default disable with PIXELFLUX_WAYLAND=false."}
   - {date: "28.12.25:", desc: "Add Wayland init logic, rebase to Alpine 3.23."}
   - {date: "26.07.25:", desc: "Rebase to Selkies and Alpine 3.22, HTTPS IS NOW REQUIRED."}
